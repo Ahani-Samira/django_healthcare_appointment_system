@@ -9,10 +9,26 @@ from .validators import phone_number_validator
 
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, phone_number, password=None, **extra_fields):
+
+    def create_user(self, phone_number, password=None, gender=None,
+                    first_name=None, last_name=None, date_of_birth=None,
+                    **extra_fields):
         if not phone_number:
             raise ValueError('Phone number must be provided')
-        user = self.model(phone_number=phone_number, **extra_fields)
+        if not (password and first_name and last_name):
+            raise ValueError('Password, first name, and last name must be provided')
+
+        extra_fields.setdefault('is_doctor', False)
+
+        user = self.model(
+            phone_number=phone_number,
+            gender=gender,
+            first_name=first_name,
+            last_name=last_name,
+            date_of_birth=date_of_birth,
+            **extra_fields
+        )
+
         user.set_password(password)
         user.save(using=self._db)
         return user
