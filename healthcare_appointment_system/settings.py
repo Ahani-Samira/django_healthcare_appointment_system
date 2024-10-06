@@ -12,8 +12,10 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os
 import dj_database_url
+from datetime import timedelta
 from dotenv import load_dotenv
 from pathlib import Path
+from django.utils.translation import gettext_lazy as _
 
 
 load_dotenv()
@@ -51,7 +53,9 @@ THIRD_PARTY_APPS = [
     'drf_yasg',
 ]
 
-LOCAL_APPS = []
+LOCAL_APPS = [
+    'users.apps.UsersConfig',
+]
 
 INSTALLED_APPS = DJANGO_DEFAULT_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -63,6 +67,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'healthcare_appointment_system.urls'
@@ -135,7 +140,16 @@ SIMPLE_JWT = {
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fa-ir'
+
+LANGUAGES = [
+    ('en', _('English')),
+    ('fa', _('Persian')),
+]
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
 
 TIME_ZONE = 'UTC'
 
