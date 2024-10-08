@@ -8,9 +8,15 @@ from django.utils.translation import gettext
 from .validators import phone_number_validator
 
 
+class Gender(models.TextChoices):
+    MALE = 'M', _('Male')
+    FEMALE = 'F', _('Female')
+    UNSET = 'U', _('Unset')
+
+
 class CustomUserManager(BaseUserManager):
 
-    def create_user(self, phone_number, password=None, gender=None,
+    def create_user(self, phone_number, password=None, gender=Gender.UNSET,
                     first_name=None, last_name=None, date_of_birth=None,
                     **extra_fields):
         if not phone_number:
@@ -40,10 +46,6 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(phone_number, password, **extra_fields)
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    class Gender(models.TextChoices):
-        MALE = 'M', _('Male')
-        FEMALE = 'F', _('Female')
-        UNSET = 'U', _('Unset')
 
     id = models.UUIDField(
         primary_key=True, unique=True,
@@ -54,7 +56,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         max_length=1, choices=Gender.choices,
         default=Gender.UNSET, verbose_name=_("Gender")
     )
-    slug = models.SlugField(blank=True, editable=False, verbose_name=_("Slug"))
+    slug = models.SlugField(null=True, blank=True, editable=False, verbose_name=_("Slug"))
     phone_number = models.CharField(
         max_length=11, validators=[phone_number_validator],
         unique=True, verbose_name=_("Phone Number")
@@ -63,7 +65,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=30, verbose_name=_("Last Name"))
     date_of_birth = models.DateField(null=True, blank=True, verbose_name=_("Date of Birth"))
     is_active = models.BooleanField(default=True, verbose_name=_("Is Active"))
-    is_doctor = models.BooleanField(default=False, verbose_name=_("Is Doctor"))
+    is_doctor = models.BooleanField(default=False, null=True, blank=True, verbose_name=_("Is Doctor"))
     is_staff = models.BooleanField(default=False, verbose_name=_("Is Staff"))
 
     USERNAME_FIELD = 'phone_number'
