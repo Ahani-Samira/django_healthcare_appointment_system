@@ -24,7 +24,6 @@ class Availability(models.Model):
     clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE, verbose_name=_("Clinic"))
     start_time = models.DateTimeField(
         verbose_name=_("Start time"),
-        default=timezone.now(),
         validators=[validate_not_past_date]
     )
     end_time = models.DateTimeField(verbose_name=_("End time"))

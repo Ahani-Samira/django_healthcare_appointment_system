@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
-from .models import CustomUser, Doctor, Patient
+from .models import User, Doctor, Patient
 
 admin.site.site_header = _("The management panel of the healthcare appointment system")
 
@@ -14,7 +14,7 @@ class PatientInline(admin.StackedInline):
     can_delete = False
     verbose_name_plural = _('Patient Information')
 
-class CustomUserAdmin(admin.ModelAdmin):
+class UserAdmin(admin.ModelAdmin):
     inlines = (DoctorInline, PatientInline)
     list_display = (
         'first_name', 'last_name', 'phone_number',
@@ -63,4 +63,4 @@ class PatientAdmin(admin.ModelAdmin):
         }),
     )
 
-admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.register(User, UserAdmin)

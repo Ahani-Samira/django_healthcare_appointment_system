@@ -14,7 +14,7 @@ class Gender(models.TextChoices):
     UNSET = 'U', _('Unset')
 
 
-class CustomUserManager(BaseUserManager):
+class UserManager(BaseUserManager):
 
     def create_user(self, phone_number, password=None, gender=Gender.UNSET,
                     first_name=None, last_name=None, date_of_birth=None,
@@ -45,7 +45,7 @@ class CustomUserManager(BaseUserManager):
 
         return self.create_user(phone_number, password, **extra_fields)
 
-class CustomUser(AbstractBaseUser, PermissionsMixin):
+class User(AbstractBaseUser, PermissionsMixin):
 
     id = models.UUIDField(
         primary_key=True, unique=True,
@@ -71,7 +71,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'phone_number'
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
-    objects = CustomUserManager()
+    objects = UserManager()
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -87,7 +87,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 
 class Doctor(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, verbose_name=_("User"))
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name=_("User"))
     specialty = models.CharField(max_length=100, verbose_name=_("Specialty"))
     medical_code = models.CharField(max_length=50, unique=True, verbose_name=_("Medical Code"))
     photo = models.ImageField(upload_to='doctor_photos/', verbose_name=_("Photo"))
@@ -112,7 +112,7 @@ class Patient(models.Model):
         ARMED_FORCES = 'A', _('Armed Forces')
         NOT_INSURED = 'N', _('Not Insured')
 
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, verbose_name=_("User"))
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name=_("User"))
     insurance_type = models.CharField(
         max_length=1, choices=InsuranceType.choices,
         default=InsuranceType.NOT_INSURED,

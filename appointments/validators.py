@@ -1,12 +1,11 @@
-import datetime
-
-from datetime import timedelta, datetime
+from datetime import timedelta
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 
 def validate_not_past_date(value):
-    if value < datetime.now():
+    if value < timezone.now():
         raise ValidationError(_("The time cannot be in the past."))
 
 def validate_same_day(start_time, end_time):
