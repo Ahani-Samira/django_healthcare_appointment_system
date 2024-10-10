@@ -65,7 +65,7 @@ class Availability(models.Model):
         date = self.start_time.date()
         start = self.start_time.strftime('%H:%M')
         end = self.end_time.strftime('%H:%M')
-        return f"{self.doctor.user}-{date}({start}-{end})"
+        return f"{self.doctor}-{date}({start}-{end})"
 
 
 class Appointment(models.Model):
