@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-06 08:24+0330\n"
+"POT-Creation-Date: 2024-10-10 21:59+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,229 +38,118 @@ msgstr "مجوزها"
 msgid "users"
 msgstr "کاربران"
 
-#: users/models.py:44
+#: users/models.py:12
 msgid "Male"
 msgstr "مرد"
 
-#: users/models.py:45
+#: users/models.py:13
 msgid "Female"
 msgstr "زن"
 
-#: users/models.py:46
+#: users/models.py:14
 msgid "Unset"
 msgstr "تنظیم نشده"
 
-#: users/models.py:51
+#: users/models.py:53
 msgid "ID"
 msgstr "شناسه کاربری"
 
-#: users/models.py:55
+#: users/models.py:57
 msgid "Gender"
 msgstr "جنسیت"
 
-#: users/models.py:57
+#: users/models.py:59
 msgid "Slug"
 msgstr "اسلاگ (url قابل فهم)"
 
-#: users/models.py:60
+#: users/models.py:62
 msgid "Phone Number"
 msgstr "شماره تلفن"
 
-#: users/models.py:62
+#: users/models.py:64
 msgid "First Name"
 msgstr "نام"
 
-#: users/models.py:63
+#: users/models.py:65
 msgid "Last Name"
 msgstr "نام خانوادگی"
 
-#: users/models.py:64
+#: users/models.py:66
 msgid "Date of Birth"
 msgstr "تاریخ تولد"
 
-#: users/models.py:65
+#: users/models.py:67
 msgid "Is Active"
 msgstr "فعال است"
 
-#: users/models.py:66
+#: users/models.py:68
 msgid "Is Doctor"
 msgstr "دکتر است"
 
-#: users/models.py:67
+#: users/models.py:69
 msgid "Is Staff"
 msgstr "کارمند است"
 
-#: users/models.py:83 users/models.py:88 users/models.py:113
+#: users/models.py:85 users/models.py:90 users/models.py:115
 msgid "User"
 msgstr "کاربر"
 
-#: users/models.py:84
+#: users/models.py:86
 msgid "Users"
 msgstr "کاربران"
 
-#: users/models.py:89
+#: users/models.py:91
 msgid "Specialty"
 msgstr "تخصص"
 
-#: users/models.py:90
+#: users/models.py:92
 msgid "Medical Code"
 msgstr "شماره نظام پزشکی"
 
-#: users/models.py:91 users/models.py:121
+#: users/models.py:93 users/models.py:123
 msgid "Photo"
 msgstr "عکس"
 
-#: users/models.py:99
+#: users/models.py:101
 #, python-brace-format
 msgid "Dr.{self.user.first_name} {self.user.last_name} ({self.specialty})"
 msgstr "دکتر {self.user.first_name} {self.user.last_name} ({self.specialty})"
 
-#: users/models.py:102
+#: users/models.py:104
 msgid "Doctor"
 msgstr "پزشک"
 
-#: users/models.py:103
+#: users/models.py:105
 msgid "Doctors"
 msgstr "پزشکان"
 
-#: users/models.py:108
+#: users/models.py:110
 msgid "Health"
 msgstr "سلامت"
 
-#: users/models.py:109
+#: users/models.py:111
 msgid "Social Security"
 msgstr "تامین اجتماعی"
 
-#: users/models.py:110
+#: users/models.py:112
 msgid "Armed Forces"
 msgstr "نیروهای مسلح"
 
-#: users/models.py:111
+#: users/models.py:113
 msgid "Not Insured"
 msgstr "بیمه نشده"
 
-#: users/models.py:117
+#: users/models.py:119
 msgid "Insurance Type"
 msgstr "نوع بیمه"
 
-#: users/models.py:135
+#: users/models.py:137
 msgid "Patient"
 msgstr "بیمار"
 
-#: users/models.py:136
+#: users/models.py:138
 msgid "Patients"
 msgstr "بیماران"
-
-#: users/permissions.py:6
-msgid ""
-"\n"
-"     Permission to only allow the owner of an object to view or edit it.\n"
-"    "
-msgstr ""
-"\n"
-"      مجوز برای اطمینان از اینکه فقط کاربر می تواند نمایه خود را مشاهده یا "
-"ویرایش کند.\n"
-"    "
-
-#: users/serializers.py:9
-msgid ""
-"CustomUserSerializer for serializing and validating user data.\n"
-"\n"
-"    ## Fields:\n"
-"    - id: user ID (An automatically generated random UUID)\n"
-"    - phone_number: user's phone number with validation\n"
-"    - first_name: User's first name\n"
-"    - last_name: User's last name\n"
-"    - date_of_birth: user's date of birth\n"
-"    - gender: the gender of the user.\n"
-"    "
-msgstr ""
-"CustomUserSerializer برای سریالایزه کردن و اعتبارسنجی داده‌های کاربر.\n"
-"\n"
-"    ## فیلدها:\n"
-"    - id: شناسه کاربر (یک UUID تصادفی که به طور خودکار تولید می شود)\n"
-"    - phone_number: شماره تلفن کاربر با اعتبارسنجی.\n"
-"    - first_name: نام کاربر\n"
-"    - Last name: نام خانوادگی کاربر\n"
-"    - date_of_birth: تاریخ تولد کاربر\n"
-"    - gender: جنسیت کاربر.\n"
-"    "
-
-#: users/serializers.py:36
-msgid ""
-"LimitCustomUserSerializer for serializing and validating some user data.\n"
-"\n"
-"    ## Fields:\n"
-"    - id: user ID (An automatically generated random UUID)\n"
-"    - first_name: User's first name\n"
-"    - last_name: User's last name\n"
-"    "
-msgstr ""
-"CustomUserSerializer برای سریالایزه کردن و اعتبارسنجی برخی از داده‌های کاربر.\n"
-"\n"
-"    ## فیلدها:\n"
-"    - id: شناسه کاربر (یک UUID تصادفی که به طور خودکار تولید می شود)\n"
-"    - first_name: نام کاربر\n"
-"    - Last name: نام خانوادگی کاربر\n"
-"    "
-
-#: users/serializers.py:50
-msgid ""
-"DoctorSerializer for viewing Doctor information accessible to all.\n"
-"\n"
-"       ## Fields:\n"
-"       - user: Nested serializer for the LimitCustomUser data of the Doctor\n"
-"       - medical_code: Doctor's medical code\n"
-"       - specialty: Doctor's specialty\n"
-"       - photo: Doctor's profile photo\n"
-"       "
-msgstr ""
-"DoctorSerializer برای مشاهده اطلاعات پزشک که برای همه در دسترس است..\n"
-"\n"
-"       ## فیلدها:\n"
-"       - user: سریالایزر تو در تو برای داده‌های LimitCustomUser پزشک\n"
-"       - medical_code: Doctor's medical code\n"
-"       - specialty: شماره نظام پزشکی دکتر\n"
-"       - photo: عکس پروفایل دکتر\n"
-"       "
-
-#: users/serializers.py:68
-msgid ""
-"DoctorManagementSerializer for managing Doctor information.\n"
-"    \n"
-"    ## Fields:\n"
-"    - user: Nested serializer for the CustomUser data\n"
-"    - medical_code: Doctor's medical code\n"
-"    - specialty: Doctor's specialty\n"
-"    - photo: Doctor's profile photo\n"
-"    "
-msgstr ""
-"DoctorManagementSerializer برای مدیریت اطلاعات پزشک.\n"
-"    \n"
-"    ## فیلدها:\n"
-"    - user: سریالایزر تو در تو برای داده‌های CustomUser\n"
-"       - medical_code: Doctor's medical code\n"
-"       - specialty: شماره نظام پزشکی دکتر\n"
-"       - photo: عکس پروفایل دکتر\n"
-"       "
-
-#: users/serializers.py:103
-msgid ""
-"PatientSerializer for managing Patient information.\n"
-"    \n"
-"    ## Fields:\n"
-"    - user: Nested serializer for the CustomUser data\n"
-"    - insurance_type: Patient's insurance type\n"
-"    - photo: Patient's profile photo\n"
-"    "
-msgstr ""
-"PatientSerializer برای مدیریت اطلاعات بیمار.\n"
-"    \n"
-"    ## فیلدها:\n"
-"    - user: سریالایزر تو در تو برای داده‌های CustomUser\n"
-"    - insurance_type: نوع بیمه بیمار\n"
-"    - photo: عکس پروفایل بیمار\n"
-"    "
 
 #: users/validators.py:7
 msgid "The number of digits must be exactly 11!"

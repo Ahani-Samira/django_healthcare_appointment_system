@@ -1,0 +1,139 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-10-10 21:59+0330\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: appointments/apps.py:8
+msgid "appointments"
+msgstr "نوبت ها"
+
+#: appointments/models.py:11
+msgid "Name"
+msgstr "نام"
+
+#: appointments/models.py:12
+msgid "Address"
+msgstr "آدرس"
+
+#: appointments/models.py:18 appointments/models.py:24
+msgid "Clinic"
+msgstr "کلینیک"
+
+#: appointments/models.py:19
+msgid "Clinics"
+msgstr "کلینیک ها"
+
+#: appointments/models.py:23
+msgid "Doctor"
+msgstr "پزشک"
+
+#: appointments/models.py:26
+msgid "Start time"
+msgstr "زمان شروع"
+
+#: appointments/models.py:29
+msgid "End time"
+msgstr "زمان پایان"
+
+#: appointments/models.py:30
+msgid "Selectable times"
+msgstr "زمان‌های قابل انتخاب"
+
+#: appointments/models.py:33 appointments/models.py:72
+msgid "Availability"
+msgstr "در دسترس بودن"
+
+#: appointments/models.py:34
+msgid "Availabilities"
+msgstr "در دسترس بودن ها"
+
+#: appointments/models.py:71
+msgid "Patient"
+msgstr "بیمار"
+
+#: appointments/models.py:73
+msgid "Selected Time"
+msgstr "زمان انتخاب شده"
+
+#: appointments/models.py:77
+msgid "Appointment"
+msgstr "نوبت"
+
+#: appointments/models.py:78
+msgid "Appointments"
+msgstr "نوبت ها"
+
+#: appointments/models.py:84
+msgid "Selected time is not available."
+msgstr "زمان انتخاب شده در دسترس نیست"
+
+#: appointments/models.py:86
+msgid "Selected time could not be verified."
+msgstr "زمان انتخاب شده قابل تأیید نیست"
+
+#: appointments/validators.py:9
+msgid "The time cannot be in the past."
+msgstr "زمان نمی تواند در گذشته باشد."
+
+#: appointments/validators.py:13
+msgid "End time must be on the same day as start time."
+msgstr "زمان پایان باید همان روز زمان شروع باشد."
+
+#: appointments/validators.py:17
+#, python-brace-format
+msgid "End time must be at least {visit_time} minutes after start time."
+msgstr "زمان پایان باید حداقل {visit_time} دقیقه پس از زمان شروع باشد."
+
+#: appointments/views.py:42
+msgid "Retrieve a list of clinics."
+msgstr "دریافت فهرستی از کلینیک‌ها."
+
+#: appointments/views.py:59
+msgid "Create a new clinic."
+msgstr "ایجاد یک کلینیک جدید."
+
+#: appointments/views.py:76
+msgid "Retrieve a specific clinic by ID."
+msgstr "دریافت کلینیک مخصوص با شناسه."
+
+#: appointments/views.py:95
+msgid "Update a specific clinic."
+msgstr "به‌روزرسانی یک کلینیک خاص."
+
+#: appointments/views.py:117
+msgid "Partially update a specific clinic."
+msgstr "به‌روزرسانی جزئی یک کلینیک خاص."
+
+#: appointments/views.py:135
+msgid "Delete a specific clinic."
+msgstr "حذف یک کلینیک خاص."
+
+#: appointments/views.py:175
+#, fuzzy
+#| msgid "Retrieve a list of clinics."
+msgid "Retrieve a list of availabilities."
+msgstr "دریافت فهرستی از کلینیک‌ها."
+
+#: appointments/views.py:191
+#, fuzzy
+#| msgid "Create a new clinic."
+msgid "Create a new availability."
+msgstr "ایجاد یک کلینیک جدید."
+
+#~ msgid "ClinicViewSet for managing clinics."
+#~ msgstr "ClinicViewSet برای مدیریت کلینیک‌ها."

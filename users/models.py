@@ -8,9 +8,15 @@ from django.utils.translation import gettext
 from .validators import phone_number_validator
 
 
-class CustomUserManager(BaseUserManager):
+class Gender(models.TextChoices):
+    MALE = 'M', _('Male')
+    FEMALE = 'F', _('Female')
+    UNSET = 'U', _('Unset')
 
-    def create_user(self, phone_number, password=None, gender=None,
+
+class UserManager(BaseUserManager):
+
+    def create_user(self, phone_number, password=None, gender=Gender.UNSET,
                     first_name=None, last_name=None, date_of_birth=None,
                     **extra_fields):
         if not phone_number:
@@ -39,11 +45,7 @@ class CustomUserManager(BaseUserManager):
 
         return self.create_user(phone_number, password, **extra_fields)
 
-class CustomUser(AbstractBaseUser, PermissionsMixin):
-    class Gender(models.TextChoices):
-        MALE = 'M', _('Male')
-        FEMALE = 'F', _('Female')
-        UNSET = 'U', _('Unset')
+class User(AbstractBaseUser, PermissionsMixin):
 
     id = models.UUIDField(
         primary_key=True, unique=True,
@@ -54,7 +56,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         max_length=1, choices=Gender.choices,
         default=Gender.UNSET, verbose_name=_("Gender")
     )
-    slug = models.SlugField(blank=True, editable=False, verbose_name=_("Slug"))
+    slug = models.SlugField(null=True, blank=True, editable=False, verbose_name=_("Slug"))
     phone_number = models.CharField(
         max_length=11, validators=[phone_number_validator],
         unique=True, verbose_name=_("Phone Number")
@@ -63,13 +65,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=30, verbose_name=_("Last Name"))
     date_of_birth = models.DateField(null=True, blank=True, verbose_name=_("Date of Birth"))
     is_active = models.BooleanField(default=True, verbose_name=_("Is Active"))
-    is_doctor = models.BooleanField(default=False, verbose_name=_("Is Doctor"))
+    is_doctor = models.BooleanField(default=False, null=True, blank=True, verbose_name=_("Is Doctor"))
     is_staff = models.BooleanField(default=False, verbose_name=_("Is Staff"))
 
     USERNAME_FIELD = 'phone_number'
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
-    objects = CustomUserManager()
+    objects = UserManager()
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -85,7 +87,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 
 class Doctor(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, verbose_name=_("User"))
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name=_("User"))
     specialty = models.CharField(max_length=100, verbose_name=_("Specialty"))
     medical_code = models.CharField(max_length=50, unique=True, verbose_name=_("Medical Code"))
     photo = models.ImageField(upload_to='doctor_photos/', verbose_name=_("Photo"))
@@ -110,7 +112,7 @@ class Patient(models.Model):
         ARMED_FORCES = 'A', _('Armed Forces')
         NOT_INSURED = 'N', _('Not Insured')
 
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, verbose_name=_("User"))
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name=_("User"))
     insurance_type = models.CharField(
         max_length=1, choices=InsuranceType.choices,
         default=InsuranceType.NOT_INSURED,
