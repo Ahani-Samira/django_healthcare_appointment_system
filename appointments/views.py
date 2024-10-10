@@ -8,7 +8,8 @@ from django.utils.translation import gettext_lazy as _
 from .models import Clinic, Availability, Appointment
 from .serializers import (ClinicSerializer,
                           AvailabilitySerializer,
-                          SelectableTimeListSerializer
+                          SelectableTimeListSerializer,
+                          AppointmentSerializer
                           )
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
@@ -266,4 +267,130 @@ class AvailabilityViewSet(ViewSet):
         '''Delete a specific availability.'''
         availability = get_object_or_404(Availability, pk=pk)
         availability.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class AppointmentViewSet(ViewSet):
+    '''AppointmentViewSet for managing appointments.'''
+
+    permission_classes_by_action = {
+        'list': [IsAuthenticated],
+        'create': [IsAuthenticated],
+        'retrieve': [IsAuthenticated],
+        'update': [IsOwner, IsAuthenticated],
+        'partial_update': [IsOwner, IsAuthenticated],
+        'destroy': [IsOwner, IsAuthenticated],
+    }
+
+    serializer_class = AppointmentSerializer
+
+    def get_permissions(self):
+        '''Get permissions based on the action.'''
+        return [permission() for permission in self.permission_classes_by_action.get(self.action, [])]
+
+    def get_serializer_class(self):
+        '''Get the serializer class based on the action.'''
+        return self.serializer_class
+
+    @swagger_auto_schema(
+        responses={200: AppointmentSerializer(many=True)},
+        operation_description='Retrieve a list of appointments.'
+    )
+    def list(self, request):
+        '''Retrieve a list of appointments.'''
+        appointments = Appointment.objects.all()
+        serializer = self.get_serializer_class()
+        data = serializer(appointments, many=True).data
+        return Response(data, status=status.HTTP_200_OK)
+
+    @swagger_auto_schema(
+        request_body=AppointmentSerializer,
+        responses={
+            201: AppointmentSerializer,
+            400: openapi.Response('Bad Request', schema=openapi.Schema(type=openapi.TYPE_OBJECT, properties={
+                'error': openapi.Schema(type=openapi.TYPE_STRING)
+            })),
+        },
+        operation_description='Create a new appointment.'
+    )
+    def create(self, request):
+        '''Create a new appointment.'''
+        serializer = self.get_serializer_class()(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @swagger_auto_schema(
+        responses={
+            200: AppointmentSerializer,
+            404: openapi.Response('Not Found', schema=openapi.Schema(type=openapi.TYPE_OBJECT, properties={
+                'error': openapi.Schema(type=openapi.TYPE_STRING)
+            })),
+        },
+        operation_description='Retrieve a specific appointment by ID.'
+    )
+    def retrieve(self, request, pk=None):
+        '''Retrieve a specific appointment by ID.'''
+        appointment = get_object_or_404(Appointment, pk=pk)
+        serializer = self.get_serializer_class()(appointment)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @swagger_auto_schema(
+        request_body=AppointmentSerializer,
+        responses={
+            200: AppointmentSerializer,
+            400: openapi.Response('Bad Request', schema=openapi.Schema(type=openapi.TYPE_OBJECT, properties={
+                'error': openapi.Schema(type=openapi.TYPE_STRING)
+            })),
+            404: openapi.Response('Not Found', schema=openapi.Schema(type=openapi.TYPE_OBJECT, properties={
+                'error': openapi.Schema(type=openapi.TYPE_STRING)
+            })),
+        },
+        operation_description='Update a specific appointment.'
+    )
+    def update(self, request, pk=None):
+        '''Update a specific appointment.'''
+        appointment = get_object_or_404(Appointment, pk=pk)
+        serializer = self.get_serializer_class()(appointment, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @swagger_auto_schema(
+        request_body=AppointmentSerializer,
+        responses={
+            200: AppointmentSerializer,
+            400: openapi.Response('Bad Request', schema=openapi.Schema(type=openapi.TYPE_OBJECT, properties={
+                'error': openapi.Schema(type=openapi.TYPE_STRING)
+            })),
+            404: openapi.Response('Not Found', schema=openapi.Schema(type=openapi.TYPE_OBJECT, properties={
+                'error': openapi.Schema(type=openapi.TYPE_STRING)
+            })),
+        },
+        operation_description='Partially update a specific appointment.'
+    )
+    def partial_update(self, request, pk=None):
+        '''Partially update a specific appointment.'''
+        appointment = get_object_or_404(Appointment, pk=pk)
+        serializer = self.get_serializer_class()(appointment, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @swagger_auto_schema(
+        responses={
+            204: openapi.Response('No Content'),
+            404: openapi.Response('Not Found', schema=openapi.Schema(type=openapi.TYPE_OBJECT, properties={
+                'error': openapi.Schema(type=openapi.TYPE_STRING)
+            })),
+        },
+        operation_description='Delete a specific appointment.'
+    )
+    def destroy(self, request, pk=None):
+        '''Delete a specific appointment.'''
+        appointment = get_object_or_404(Appointment, pk=pk)
+        appointment.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

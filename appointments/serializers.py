@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from users.serializers import DoctorSerializer, DoctorManagementSerializer, PatientSerializer
+from users.serializers import DoctorSerializer, LimitPatientSerializer
 from .models import Clinic, Availability, Appointment
 
 
@@ -42,13 +42,43 @@ class SelectableTimeListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Availability
-        fields = ['id', 'doctor', 'clinic_name', 'selectable_time_list']
-        read_only_fields = ['id', 'doctor', 'clinic_name']
+        fields = ['id', 'doctor', 'clinic_name', 'start_time', 'end_time', 'selectable_time_list']
+        read_only_fields = ['id', 'doctor', 'clinic_name', 'start_time', 'end_time']
 
     def get_clinic_name(self, obj):
         return obj.clinic.name if obj.clinic else None
 
     def update(self, instance, validated_data):
         instance.selectable_time_list = validated_data.get('selectable_time_list', instance.selectable_time_list)
+        instance.save()
+        return instance
+
+
+class AppointmentSerializer(serializers.ModelSerializer):
+    '''
+    AppointmentSerializer for serializing appointment data.
+
+    ## Fields:
+    - id: Access ID (automatically)
+    - patient: Information about the related patient
+    - availability: Availability details for the appointment
+    - selected_time: Selected time for the appointment
+    '''
+
+    availability = SelectableTimeListSerializer()
+    patient = LimitPatientSerializer()
+
+    class Meta:
+        model = Appointment
+        fields = ['id', 'patient', 'availability', 'selected_time']
+        read_only_fields = ['id', 'patient', 'availability'] 
+
+    def create(self, validated_data):
+        availability_data = validated_data.pop('availability')
+        appointment = Appointment.objects.create(**validated_data, availability=availability_data)
+        return appointment
+
+    def update(self, instance, validated_data):
+        instance.selected_time = validated_data.get('selected_time', instance.selected_time)
         instance.save()
         return instance
